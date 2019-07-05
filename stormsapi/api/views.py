@@ -86,7 +86,7 @@ class ProjetoList(generics.ListCreateAPIView):
 class ProjetoDetail(generics.RetrieveUpdateDestroyAPIView):
 	queryset = Projeto.objects.all()
 	serializer_class = ProjetoSerializer
-	permission_classes = (permissions.IsAuthenticated,IsOwnerOrReadOnly)
+	#permission_classes = (permissions.IsAuthenticated,IsOwnerOrReadOnly)
 	name = 'projeto-detail'
 class MensagemList(generics.ListCreateAPIView):
 	queryset = Mensagem.objects.all()
@@ -114,7 +114,7 @@ class RespostaList(generics.ListCreateAPIView):
 		serializer.save(owner=self.request.user)
 	name = 'resposta-list'
 class RespostaDetail(generics.RetrieveUpdateDestroyAPIView):
-	queryset = Mensagem.objects.all()
+	queryset = Resposta.objects.all()
 	serializer_class = RespostaSerializer
 	permission_classes = (permissions.IsAuthenticated, IsOwnerOrReadOnly)
 	name = 'resposta-detail'
@@ -148,3 +148,9 @@ class ForumRespostaDetail(generics.RetrieveUpdateDestroyAPIView):
 	serializer_class = ForumRespostaSerializer
 	permission_classes = (permissions.IsAuthenticated, IsOwnerOrReadOnly)
 	name = 'forumresposta-detail'
+
+class ProjetoColaborador(generics.RetrieveUpdateDestroyAPIView):
+	queryset = Projeto.objects.all()
+	serializer_class = ProjetoAddColaboradorSerializer
+	permission_classes = (permissions.IsAuthenticated, IsOwnerOrReadOnly)
+	name = 'projetocolaborador-detail'

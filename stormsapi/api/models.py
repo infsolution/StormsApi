@@ -2,9 +2,23 @@ from django.contrib.auth.models import User
 from django.contrib.auth import *
 from django.db import models
 
+class Projeto(models.Model):
+	owner = models.ForeignKey('auth.User', related_name='ownerprojeto', on_delete=models.CASCADE)
+	nome = models.CharField(max_length=200)
+	data_inicio = models.DateField()
+	previsao_entrega = models.DateField()
+	data_contrato = models.DateField()
+	colaboradores = models.ManyToManyField(User)
+	date_time = models.DateTimeField(auto_now_add=True)
+	interessado = models.ForeignKey(User, on_delete=models.CASCADE, related_name='interessado', null=True)
+	class Meta:
+		ordering = ('-date_time',)
+	def __str__(self):
+		return self.nome
 
 class Scopo(models.Model):#Erro
 	owner = models.ForeignKey('auth.User', related_name='ownerscopo', on_delete=models.CASCADE)
+	projeto = models.OneToOneField(Projeto, on_delete=models.CASCADE, related_name='scopo', null=True)
 	descricao = models.CharField(max_length=256)
 	andamento = models.IntegerField(default=0)
 	def __str__(self):
@@ -28,20 +42,7 @@ class Comentario(models.Model):
 	def __str__(self):
 		return self.conteudo
 
-class Projeto(models.Model):#Deu Erro
-	owner = models.ForeignKey('auth.User', related_name='ownerprojeto', on_delete=models.CASCADE)
-	nome = models.CharField(max_length=200)
-	data_inicio = models.DateField()
-	previsao_entrega = models.DateField()
-	data_contrato = models.DateField()
-	colaboradores = models.ManyToManyField(User)
-	scopo = models.OneToOneField(Scopo, on_delete=models.CASCADE, related_name='scopo', null=True)
-	date_time = models.DateTimeField(auto_now_add=True)
-	interessado = models.ForeignKey(User, on_delete=models.CASCADE, related_name='interessado', null=True)
-	class Meta:
-		ordering = ('-date_time',)
-	def __str__(self):
-		return self.nome
+
 
 class Mensagem(models.Model):#Deu Erro
 	owner = models.ForeignKey('auth.User', related_name='ownermensage', on_delete=models.CASCADE)

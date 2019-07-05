@@ -21,4 +21,5 @@ urlpatterns = [
     path('forum-resposta/', views.ForumRespostaList.as_view(), name=views.ForumRespostaList.name),
     path('forum-resposta/<int:pk>/', views.ForumRespostaDetail.as_view(), name=views.ForumRespostaDetail.name),
     path('user-create/', views.UserCreate.as_view(), name=views.UserCreate.name),
+    path('projeto-colaborador/<int:pk>/', views.ProjetoColaborador.as_view(), name=views.ProjetoColaborador.name),
 ]
