@@ -26,8 +26,9 @@ SECRET_KEY = 'yi+iqvp72aum5_4skep=rifsb=01ie7r^%v79rxcp^ywlzop)!'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'localhost',
+    'localhost','storms.infsolution.com.br'
 ]
+
 
 
 # Application definition
