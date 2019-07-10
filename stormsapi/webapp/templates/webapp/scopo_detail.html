@@ -1,0 +1,63 @@
+{% extends "webapp/base.html" %}
+{% block body %}
+<h3>{{ scopo.descricao }}</h3>
+<p><strong>Projeto: </strong>{{scopo.projeto}}</p>
+<p><label>Andamento total do projeto</label></p>
+<progress value="{{scopo.andamento}}" max="100" style="width: 250px; height: 40px;"></progress>
+<p></p>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Responsável</th>
+			<th>Descricão</th>
+			<th>Andamento</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for atributo in scopo.atributos.all %}
+		<tr>
+			<td>{{atributo.responsavel}}</td>
+			<td>{{atributo.descricao}}</td>
+	<td><progress value="{{atributo.andamento}}" max="100" style="width: 200px; height: 30px;"></progress></td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#atributo{{ atributo.id }}">
+  		Adicionar tarefa
+	</button>
+<div class="modal fade" id="atributo{{ atributo.id }}" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <form action="{% url 'atributo_add' %}" method="POST" accept-charset="utf-8">
+	        	{% csrf_token %}
+	        	<input type="hidden" name="scopo" value="{{ scopo.id }}">
+	        	<div class="form-group">
+		            <select name="responsavel" class="form-control">
+		              {% for membro in scopo.projeto.colaboradores.all %}
+		              <option value="{{membro.id}}">{{membro.username}}</option> 
+		              {% endfor %}
+		            </select>
+		        </div>
+	        	<div class="form-group">
+					<label>Descrição</label>
+						<input type="text" class="form-control" name="descricao" required>
+				</div>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+	        <button type="submit" class="btn btn-primary">Adcionar tarefa</button>
+	        </form>
+	      </div>
+	      <div class="modal-footer">
+	        
+	      </div>
+	    </div>
+	  </div>
+	</div>
+{% endblock %}

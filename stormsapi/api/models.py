@@ -74,10 +74,10 @@ class ForumPergunta(models.Model):
 	def __str__(self):
 		return self.titulo
 
-class ForumResposta(models.Model):#Erro
+class ForumResposta(models.Model):
 	owner = models.ForeignKey('auth.User', related_name='ownerforrespo', on_delete=models.CASCADE)
 	conteudo = models.CharField(max_length=256)
-	pergunta = models.ForeignKey(ForumPergunta, on_delete=models.CASCADE, related_name='repostas')
+	pergunta = models.ForeignKey(ForumPergunta, on_delete=models.CASCADE, related_name='respostas')
 	date_time = models.DateTimeField(auto_now_add=True)
 	class Meta:
 		ordering = ('-date_time',)

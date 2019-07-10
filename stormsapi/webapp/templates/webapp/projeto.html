@@ -15,9 +15,7 @@
 <button type="button" class="btn btn-secondary">
   {{projeto.data_contrato}}
 </button>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExemploModalCentralizado">
-  Adicionar membro
-</button>
+
 <p></p>
 <table class="table table-striped">
 	<h3>Atividades</h3>
@@ -44,12 +42,25 @@
     {% endfor %}
   </tbody>
 </table>
+<!--a class="btn btn-primary btn-sm" href="#" role="button">Editar</a-->
+<a class="btn btn-danger btn-sm" href="#" role="button">Excluir</a>
+<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ExemploModalCentralizado">
+  Adicionar membro
+</button>
+{% if projeto.scopo == None%}
+<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalScopo">
+  Adicionar escopo
+</button>
+{% endif %}
+{% if projeto.scopo %}
+<a class="btn btn-secondary btn-sm" href="{% url 'scopo_detail' projeto.scopo.id %}" role="button">Escopo</a>
+{% endif %}
 
 <div class="modal fade" id="ExemploModalCentralizado" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="TituloModalCentralizado">Título do modal</h5>
+        <h5 class="modal-title" id="TituloModalCentralizado">Escolha membros para a equipe.</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -71,6 +82,31 @@
       </div>
       <div class="modal-footer">
         
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalScopo" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="TituloModalCentralizado">Adicione um escopo ao projeto.</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'scopo' %}" method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="projeto" value="{{projeto.id}}">
+          <div class="form-group">
+            <label>Descrição</label>
+              <input type="text" class="form-control" name="descricao" required>
+          </div>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Adicionar escopo</button>
+        </form>
       </div>
     </div>
   </div>

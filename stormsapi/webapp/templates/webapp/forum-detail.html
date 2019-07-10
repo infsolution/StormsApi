@@ -1,0 +1,92 @@
+{% extends "webapp/base.html" %}
+{% block body %}
+<h2>{{forum.titulo}}</h2>
+{% if perfil_logado == forum.owner %}
+
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#forum{{ forum.id }}">
+  		Editar
+	</button>
+{% if forum.aberto == 1%}
+<a href="{% url 'forum_close' forum.id %}" class="btn btn-secondary">Fechar</a>
+{% else %}
+<a href="{% url 'forum_open' forum.id %}" class="btn btn-primary">Abrir</a>
+{% endif %}
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete{{ forum.id }}">
+  		Excluir
+	</button>
+{% endif %}
+<hr>
+<h5>{{ forum.descricao }}</h5>
+<hr>
+<h6>Respostas:</h6>
+<div class="col-md-8">
+{% for resposta in forum.respostas.all %}
+	
+	<div clss="card">
+		<div class="card-header">
+		    {{  resposta.owner }}
+		</div>
+		<div class="card-body">
+			{{ resposta.conteudo }}
+		</div>	
+	</div>
+
+{% endfor %}
+</div>	
+
+<div class="modal fade" id="forum{{ forum.id }}" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="TituloModalCentralizado">Editar pergunta</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'forum_edit' forum.id %}" method="POST" accept-charset="utf-8">
+        	{% csrf_token %}
+        	<div class="form-group">
+				<label>Titulo</label>
+					<input type="text" class="form-control" name="titulo" value="{{forum.titulo}}" required>
+			</div>
+        	<div class="form-group">
+				<label>Conteúdo</label>
+					<input type="text" class="form-control" name="descricao" value="{{forum.descricao}}" required>
+			</div>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="submit" class="btn btn-primary">Editar</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        
+      </div>
+    </div>
+  </div>
+</div>
+<!--MODAL DELETE CONFIRM-->
+<div class="modal fade" id="delete{{ forum.id }}" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="TituloModalCentralizado">Deseja mesmo apagar o forum?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<p>Essa ação não poderar ser defeita!</p>
+        <form action="{% url 'forum_delete' forum.id %}" method="POST" accept-charset="utf-8">
+        	{% csrf_token %}
+
+			<button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-danger">Apagar</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

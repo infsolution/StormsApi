@@ -1,6 +1,33 @@
 {% extends "webapp/base.html" %}
 {% block body %}
-	<h2>Utimas atualizações</h2>
+	<h3>Suas atividades</h3>
+<div class="row">
+	<div class="col-md-6">
+	<div class="card" style="width: 18rem;">
+	  <div class="card-body">
+	    <h5 class="card-title">Atividades em andamento</h5>
+	    {% for atri in atributos %}
+	    	{% if atri.andamento < 100 %}
+	    <p class="card-text"><a href="{% url 'atributo' atri.id %}">{{atri.descricao}}</a></p>
+	    	{% endif %}
+	    {% endfor %}
+	  </div>
+	</div>
+	</div>
+	<div class="col-md-6">
+	<div class="card" style="width: 18rem;">
+	  <div class="card-body">
+	    <h5 class="card-title">Atividades encerradas</h5>
+	    {% for atri in atributos %}
+	    	{% if atri.andamento == 100 %}
+	    <p class="card-text"><a href="{% url 'atributo' atri.id %}">{{atri.descricao}}</a></p>
+	    	{% endif %}
+	    {% endfor %}
+	  </div>
+	</div>
+</div>
+</div>
+	<h3>Utimas atualizações</h3>
 	{% for projeto in projetos %}
 		{%for tarefa in projeto.scopo.atributos.all%}
 			{% for comentario in tarefa.comentarios.all %}

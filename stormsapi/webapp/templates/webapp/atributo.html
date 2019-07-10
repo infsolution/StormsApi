@@ -14,5 +14,35 @@
 		<a href="#" class="list-group-item list-group-item-action">{{ comentario.conteudo }}</a>
 	{% endfor %}
 </div>
+<p></p>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#atributo{{ atributo.id }}">
+  		Adicionar evento
+	</button>
 
+<div class="modal fade" id="atributo{{ atributo.id }}" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <form action="{% url 'comentario_add' %}" method="POST" accept-charset="utf-8">
+	        	{% csrf_token %}
+	        	<input type="hidden" name="atributo_id" value="{{ atributo.id }}">
+	        	<div class="form-group">
+					<label>Evento</label>
+						<input type="text" class="form-control" name="conteudo" required>
+				</div>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+	        <button type="submit" class="btn btn-primary">Adcionar evento</button>
+	        </form>
+	      </div>
+	      <div class="modal-footer">
+	        
+	      </div>
+	    </div>
+	  </div>
+	</div>
 {% endblock %}

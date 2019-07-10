@@ -2,6 +2,8 @@
 {% extends "webapp/base.html" %}
 {% block body %}
 <h2>Seus Projetos</h2>
+<a href="{% url 'add'%}" class="btn btn-success"> Novo projeto</a>
+<hr>
 {% for projeto in projetos %}
 	<div class="card text-white bg-primary mb-3 col-md-6">
 	  <div class="card-header">{{projeto.nome}}</div>
@@ -25,5 +27,28 @@
 	  <a class="btn btn-success" href="{% url 'projeto' projeto.id %}" role="button">Visualizar</a>
 	</div>
 
+{% endfor %}
+{% for inter in inter_projetos %}
+	<div class="card text-white bg-primary mb-3 col-md-6">
+	  <div class="card-header">{{inter.nome}}</div>
+	  <div class="card-body">
+	    <h5 class="card-title">Detalhes</h5>
+	    <ul style="list-style: none;">
+	    <li class="card-text">Data de Inicio: {{inter.data_inicio}}</li>
+	    <li class="card-text">Previsã de entrega: {{inter.previsao_entrega}}</li>
+	    <li class="card-text">Data do contrato: {{inter.data_contrato}}</li>
+	    {% if  inter.interessado %}
+	    <li class="card-text">Interesado: {{inter.interessado}}</li>
+	    {% endif %}
+	   </ul> 
+	    <h5 class="card-title">Equipe</h5>
+	    <ul style="list-style: none;">	    
+	    {% for dev in inter.colaboradores.all %}
+	    	 <li class="card-text">{{dev.username}}</li>
+	    {% endfor %}
+	  	</ul>
+	  </div>
+	  <a class="btn btn-success" href="{% url 'projeto' projeto.id %}" role="button">Visualizar</a>
+	</div>
 {% endfor %}
 {% endblock %}
