@@ -1,0 +1,37 @@
+{% extends "webapp/base.html" %}
+{% block body %}
+<h2>Crie um projeto</h2>
+<form action="{% url 'add' %}"  method="POST" class="col-md-10">
+	{% csrf_token %}
+	<div class="form-group">
+		<label>Nome do Projeto</label>
+			<input type="text" class="form-control" name="nome">
+	</div>
+	<div class="form-group">
+		<label>Inicio</label>
+			<input type="date" class="form-control" name="data_inicio">
+	</div>
+	<div class="form-group">
+		<label>Entrega</label>
+			<input type="date" class="form-control" name="previsao_entrega">
+	</div>
+	<div class="form-group">
+		<label>Data do contrato</label>
+			<input type="date" class="form-control" name="data_contrato">
+	</div>
+	<div class="form-group">
+		<label>Interessado</label>
+			<select name="interessado_id" class="form-control">
+			  {% for interessado in interessados %}
+			  
+			  <option value="{{interessado.id}}">{{interessado.username}}</option> 
+			  {% endfor %}
+			  
+			</select>
+	</div>
+	<div class="form-group">
+		<button class="btn btn-lg btn-primary btn-block" type="subimit">Criar</button>
+	</div>
+</form>
+
+{% endblock %}

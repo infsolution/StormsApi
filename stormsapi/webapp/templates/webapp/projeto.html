@@ -1,0 +1,78 @@
+{% extends "webapp/base.html" %}
+{% block body %}
+<h2>{{ projeto.nome }}</h2>
+{% if projeto.interessado %}
+<button type="button" class="btn btn-danger">
+  {{projeto.interessado}}
+</button>
+{% endif %}
+<button type="button" class="btn btn-primary">
+  {{projeto.data_inicio}}
+</button>
+<button type="button" class="btn btn-success">
+  {{projeto.previsao_entrega}}
+</button>
+<button type="button" class="btn btn-secondary">
+  {{projeto.data_contrato}}
+</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExemploModalCentralizado">
+  Adicionar membro
+</button>
+<p></p>
+<table class="table table-striped">
+	<h3>Atividades</h3>
+  <thead>
+    <tr>
+      <th scope="col">codigo</th>
+      <th scope="col">Descrição</th>
+      <th scope="col">Responsável</th>
+      <th scope="col">Andamento</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+  	{% for atr in projeto.scopo.atributos.all %}
+    <tr>
+      	<th scope="row">{{atr.id}}</th>
+      	<td>{{atr.descricao}}</td>
+      	<td>{{atr.responsavel}}</td>
+      	<td>
+      		<progress value="{{atr.andamento}}" max="100"></progress>
+  		</td>
+      <td><a class="btn btn-primary btn-sm" href="{% url 'atributo' atr.id %}" role="button">Checar</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="modal fade" id="ExemploModalCentralizado" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="TituloModalCentralizado">Título do modal</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'addmembro' %}" method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="projeto" value="{{projeto.id}}">
+        <div class="form-group">
+            <select name="membro" class="form-control">
+              {% for membro in membros %}
+              <option value="{{membro.id}}">{{membro.username}}</option> 
+              {% endfor %}
+            </select>
+        </div>  
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="submit" class="btn btn-primary">Adicionar usuario</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

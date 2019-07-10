@@ -1,0 +1,21 @@
+{% extends "webapp/base.html" %}
+{% block body %}
+	<h2>Utimas atualizações</h2>
+	{% for projeto in projetos %}
+		{%for tarefa in projeto.scopo.atributos.all%}
+			{% for comentario in tarefa.comentarios.all %}
+				<div class="card col-md-10">
+				  <div class="card-header">
+				    {{comentario.owner}}
+				  </div>
+				  <div class="card-body">
+				    <h5 class="card-title">{{comentario.conteudo}}</h5>
+				    <p class="card-text">{{comentario.date_time}}</p>
+				    	
+				  </div>
+				</div>
+				<p></p>
+			{% endfor %}
+		{% endfor %}
+	{% endfor %}
+{% endblock %}

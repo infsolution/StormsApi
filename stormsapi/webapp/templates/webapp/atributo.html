@@ -1,0 +1,18 @@
+{% extends "webapp/base.html" %}
+{% block body %}
+
+<h2>{{ atributo.descricao }}</h2>
+<p>Escopo: {{atributo.scopo}}</p>
+
+<progress value="{{atributo.andamento}}" max="100" style="width: 250px; height: 40px;"></progress>
+<p></p>
+<div class="list-group col-md-9">
+  <a href="#" class="list-group-item list-group-item-action active">
+    {{atributo.responsavel}}
+  </a>
+  	{% for comentario in atributo.comentarios.all %}
+		<a href="#" class="list-group-item list-group-item-action">{{ comentario.conteudo }}</a>
+	{% endfor %}
+</div>
+
+{% endblock %}

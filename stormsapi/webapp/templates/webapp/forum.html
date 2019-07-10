@@ -1,0 +1,52 @@
+{% extends "webapp/base.html" %}
+{% block body %}
+<h2>Forum</h2>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExemploModalCentralizado">
+  Novo Forum
+</button>
+  <p></p>
+{% for forum in foruns %}
+<div class="card">
+  <div class="card-header">
+    {{  forum.titulo}}
+  </div>
+  <div class="card-body">
+  	<p class="card-text">{{forum.descricao}}</p>
+    <h5 class="card-text">{{forum.owner}}</h5>
+    
+    <a href="#" class="btn btn-primary">Responder</a>
+  </div>
+</div>
+{% endfor %}
+
+<div class="modal fade" id="ExemploModalCentralizado" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="TituloModalCentralizado">Pergunte no forum</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'newforum' %}" method="POST" accept-charset="utf-8">
+        	{% csrf_token %}
+        	<div class="form-group">
+				<label>Titulo</label>
+					<input type="text" class="form-control" name="titulo">
+			</div>
+        	<div class="form-group">
+				<label>Conteúdo</label>
+					<input type="text" class="form-control" name="descricao">
+			</div>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="submit" class="btn btn-primary">Criar forum</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

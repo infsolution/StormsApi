@@ -19,9 +19,10 @@ from rest_framework.authtoken.views import obtain_auth_token
 #from rest_framework import routers, serializers, viewsets
 
 urlpatterns = [
-	path('admin/', admin.site.urls),
-	path('api_auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('api-token-auth/', obtain_auth_token),
-	path('api/', include('api.urls')),
-    
+	#path('admin/', admin.site.urls),
+	#path('api_auth/', include('rest_framework.urls', namespace='rest_framework')),
+    #path('api-token-auth/', obtain_auth_token),
+    #path('api/', include('api.urls')),
+    path('', include('webapp.urls')),
+    #path('', include('django.contrib.auth.urls')),
 ]

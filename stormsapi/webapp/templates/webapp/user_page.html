@@ -1,0 +1,29 @@
+
+{% extends "webapp/base.html" %}
+{% block body %}
+<h2>Seus Projetos</h2>
+{% for projeto in projetos %}
+	<div class="card text-white bg-primary mb-3 col-md-6">
+	  <div class="card-header">{{projeto.nome}}</div>
+	  <div class="card-body">
+	    <h5 class="card-title">Detalhes</h5>
+	    <ul style="list-style: none;">
+	    <li class="card-text">Data de Inicio: {{projeto.data_inicio}}</li>
+	    <li class="card-text">Previsã de entrega: {{projeto.previsao_entrega}}</li>
+	    <li class="card-text">Data do contrato: {{projeto.data_contrato}}</li>
+	    {% if  projeto.interessado %}
+	    <li class="card-text">Interesado: {{projeto.interessado}}</li>
+	    {% endif %}
+	   </ul> 
+	    <h5 class="card-title">Equipe</h5>
+	    <ul style="list-style: none;">	    
+	    {% for dev in projeto.colaboradores.all %}
+	    	 <li class="card-text">{{dev.username}}</li>
+	    {% endfor %}
+	  	</ul>
+	  </div>
+	  <a class="btn btn-success" href="{% url 'projeto' projeto.id %}" role="button">Visualizar</a>
+	</div>
+
+{% endfor %}
+{% endblock %}

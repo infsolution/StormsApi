@@ -1,4 +1,4 @@
-from django.urls import path
+'''from django.urls import path
 from . import views
 
 urlpatterns = [
@@ -23,3 +23,4 @@ urlpatterns = [
     path('user-create/', views.UserCreate.as_view(), name=views.UserCreate.name),
     path('projeto-colaborador/<int:pk>/', views.ProjetoColaborador.as_view(), name=views.ProjetoColaborador.name),
 ]
+'''

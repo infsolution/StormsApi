@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Storms</title>
+	<link rel="stylesheet" href="{% static 'fontawesome/css/fontawesome-all.min.css' %}">
+	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <script defer src="{% static 'fontawesome/js/fontawesome-all.min.js' %}"></script>
+</head>
+<body>
+	<div class="row">
+		<div class="col-md-12">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="{% url 'index' %}">Storms</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        	{% if perfil_logado.username %}
+        		{{perfil_logado.username}}
+        	{% else %}
+          			Login
+          {% endif %}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        	<a class="dropdown-item" href="{% url 'user' %}">Projetos</a>
+          <a class="dropdown-item" href="{% url 'add' %}">Novo projeto</a>
+          <a class="dropdown-item" href="{% url 'forum' %}">Forum</a>
+          <div class="dropdown-divider"></div>
+                 {% if perfil_logado.username %}
+          <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+            {% else %}
+            <a class="dropdown-item" href="{% url 'login' %}">Login</a>
+            {% endif %}
+        </div>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
+    </form>
+  </div>
+</nav>
+</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			
+		</div>
+		<div class="col-md-8">
+		{% block body %}
+
+		{% endblock %}
+	</div>
+	</div>
+	<div class="row">
+		
+	</div>
+	<script src="{% static 'bootstrap/js/jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
